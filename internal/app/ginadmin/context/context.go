@@ -16,6 +16,10 @@ func NewTrans(ctx context.Context, trans interface{}) context.Context {
 	return context.WithValue(ctx, transCtx{}, trans)
 }
 
+/**
+从上下文中获取事务
+*/
+
 // FromTrans 从上下文中获取事务
 func FromTrans(ctx context.Context) (interface{}, bool) {
 	v := ctx.Value(transCtx{})

@@ -7,6 +7,7 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
+// 默认的密钥
 const defaultKey = "GINADMIN"
 
 var defaultOptions = options{
@@ -121,7 +122,7 @@ func (a *JWTAuth) callStore(fn func(Storer) error) error {
 	return nil
 }
 
-// DestroyToken 销毁令牌
+// DestroyToken 销毁令牌， 将redis 里面的
 func (a *JWTAuth) DestroyToken(tokenString string) error {
 	claims, err := a.parseToken(tokenString)
 	if err != nil {
@@ -146,9 +147,12 @@ func (a *JWTAuth) ParseUserID(tokenString string) (string, error) {
 		exists, err := store.Check(tokenString)
 		if err != nil {
 			return err
-		} else if exists {
+		}
+
+		if exists {
 			return auth.ErrInvalidToken
 		}
+
 		return nil
 	})
 	if err != nil {
