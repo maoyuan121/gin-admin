@@ -50,6 +50,8 @@ var (
 
 // GetRootUser 获取root用户
 func GetRootUser() *schema.User {
+
+	// 只执行一次
 	rootUserOnce.Do(func() {
 		user := config.GetGlobalConfig().Root
 		rootUser = &schema.User{
@@ -68,6 +70,7 @@ func CheckIsRootUser(ctx context.Context, recordID string) bool {
 }
 
 // Common 提供统一的业务逻辑处理
+// 打包了所有的应用服务
 type Common struct {
 	Demo  *Demo
 	Login *Login
